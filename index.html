@@ -11,7 +11,7 @@
         let computerCounter = 0; 
         function getComputerChoice()
         {
-            const randNumber = Math.floor((Math.random() * 3) + 1);
+            const randNumber = Math.floor((Math.random() * 3) + 1 );
             console.log(randNumber);
             switch (randNumber)
             {
@@ -29,7 +29,60 @@
         {
             return prompt("Rock, Paper, or Scissors. What's your choice?").toLowerCase();
         }
-        console.log(getHumanChoice());
+        function handleWinRound(playerChoice, computerChoice)
+        {
+            playerCounter++;
+            console.log(`You WIN! ${playerChoice} beats ${computerChoice}`);
+        }
+        function handleLoseRound(playerChoice, computerChoice)
+        {
+            computerCounter++;
+            console.log(`You Lose  ${computerChoice} beats ${playerChoice}`);
+        }
+        function handleDrawRound(playerChoice, computerChoice)
+        {
+            console.log(`It's a DRAW !!! Both picked ${computerChoice}`);
+        }
+        function playRound(humanChoice, computerChoice)
+        {
+            switch(humanChoice)
+            {
+                case "paper" :
+                {
+                    if (computerChoice == "rock") handleWinRound(humanChoice, computerChoice);
+                    else if (computerChoice == "scissors") handleLoseRound(humanChoice, computerChoice);
+                    else handleDrawRound(humanChoice, computerChoice);
+                    break;
+                }
+                case "rock"  :
+                if (computerChoice == "scissors") handleWinRound(humanChoice, computerChoice);
+                    else if (computerChoice == "paper") handleLoseRound(humanChoice, computerChoice);
+                    else handleDrawRound(humanChoice, computerChoice);
+                break;
+                case "scissors":
+                if (computerChoice == "paper") handleWinRound(humanChoice, computerChoice);
+                    else if (computerChoice == "rock") handleLoseRound(humanChoice, computerChoice);
+                    else handleDrawRound(humanChoice, computerChoice);
+                break;
+                default : playRound("rock", computerChoice);
+                break;
+                
+            }
+        }
+        function playGame()
+        {
+            for (let i = 0; i < 5; i++)
+            {
+                const humanChoice = getHumanChoice();
+                const computerChoice = getComputerChoice(); 
+                playRound(humanChoice, computerChoice);
+                console.log(computerChoice); 
+            }
+            if(playerCounter > computerCounter) console.log(`YOU WIN! ${playerCounter} - ${computerCounter} `)
+            else if (computerCounter > playerCounter) console.log(`you lose :(  ${playerCounter} - ${computerCounter} `)
+            else console.log(`It's a DRAW! ${playerCounter} - ${computerCounter} `)
+        }
+        playGame();
     </script>
     
 </body>
