@@ -21,11 +21,17 @@
                 break;
                 case 3: return "scissors";
                 break;
-                default: return "xdd";
+                default: return "xdd"; // Not Reachable
             }
         }
-        console.log(getComputerChoice());
+
+        function getHumanChoice()
+        {
+            return prompt("Rock, Paper, or Scissors. What's your choice?").toLowerCase();
+        }
+        console.log(getHumanChoice());
     </script>
     
 </body>
+
 </html>
