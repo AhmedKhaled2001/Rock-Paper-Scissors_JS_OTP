@@ -6,6 +6,21 @@
     <title>Rock Paper Scissors </title>
 </head>
 <body>
+    <div class="container">
+        <div style="padding-bottom: 10px;"> Play Game </div>
+        <button id="rock"> Rock</button>
+        <button id="paper"> Paper</button>
+        <button id="scissors"> Scissors</button>
+
+        <div style="padding-top: 10px;">
+            Round Result: <span class="round-result"> </span>
+        </div>
+        <div style="padding-top: 10px;">
+            Score: <span class="score"> 0 - 0 </span>
+        </div>
+        <div class= "game-result" style="padding-top: 10px;"></div>
+
+    </div>
     <script>
         let playerCounter = 0;
         let computerCounter = 0; 
@@ -24,6 +39,7 @@
                 default: return "xdd"; // Not Reachable
             }
         }
+        const roundResult = document.querySelector(".round-result");
 
         function getHumanChoice()
         {
@@ -32,19 +48,36 @@
         function handleWinRound(playerChoice, computerChoice)
         {
             playerCounter++;
+            roundResult.textContent = `You WIN! ${playerChoice} beats ${computerChoice}`;
             console.log(`You WIN! ${playerChoice} beats ${computerChoice}`);
         }
         function handleLoseRound(playerChoice, computerChoice)
         {
             computerCounter++;
+            roundResult.textContent = `You Lose  ${computerChoice} beats ${playerChoice}`;
+
             console.log(`You Lose  ${computerChoice} beats ${playerChoice}`);
         }
         function handleDrawRound(playerChoice, computerChoice)
         {
+            roundResult.textContent = `It's a DRAW !!! Both picked ${computerChoice}`;
+            
             console.log(`It's a DRAW !!! Both picked ${computerChoice}`);
         }
+        const scoreCont = document.querySelector(".score");
+        const gameResultsCont = document.querySelector(".game-result");
+        let gameOver = false;
         function playRound(humanChoice, computerChoice)
         {
+            if(gameOver)
+            {
+                computerCounter = 0;
+                playerCounter = 0;
+                scoreCont.textContent = "";
+                gameResultsCont.textContent = "";
+                roundResult.textContent = "";
+                gameOver = false;
+            }
             switch(humanChoice)
             {
                 case "paper" :
@@ -68,6 +101,21 @@
                 break;
                 
             }
+            scoreCont.textContent = `${playerCounter} - ${computerCounter}`;
+            if(playerCounter >= 5) 
+            {
+                gameResultsCont.textContent = "YOU WIN!!";
+                gameOver = true;
+            }
+            else if (computerCounter >= 5)
+            {
+                gameResultsCont.textContent = "you lose :(";
+                gameOver = true;
+            }
+            else
+            {
+                // do nothing game continues....
+            }
         }
         function playGame()
         {
@@ -82,8 +130,21 @@
             else if (computerCounter > playerCounter) console.log(`you lose :(  ${playerCounter} - ${computerCounter} `)
             else console.log(`It's a DRAW! ${playerCounter} - ${computerCounter} `)
         }
-        playGame();
+        const container = document.querySelector(".container");
+        container.addEventListener('click', function(event)
+        {
+            const target = event.target;
+            console.log(target.id);
+            if(target.id != "")
+            {
+                const humanChoice = target.id;
+                const computerChoice = getComputerChoice();
+                playRound(humanChoice, computerChoice);
+            }
+        });
     </script>
+
+    
     
 </body>
 
